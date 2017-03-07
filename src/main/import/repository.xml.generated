@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns:j="http://www.jahia.org/jahia/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
+    <modules jcr:primaryType="jnt:modules">
+        <jahia-tr-module j:dependencies="default"
+                       j:modulePriority="0"
+                       j:moduleType="module"
+                       j:title="jahia-tr-module"
+                       jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                       jcr:primaryType="jnt:module">
+                <sources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                  jcr:primaryType="jnt:moduleVersionFolder"
+                  j:staticMountPointProviderKey="module-jahia-tr-module-1.0-SNAPSHOT">
+                    <pom.xml jcr:primaryType="jnt:xmlFile"/>
+                    <src jcr:primaryType="jnt:folder">
+                        <main jcr:primaryType="jnt:folder">
+                            <resources jcr:primaryType="jnt:folder">
+                                <css jcr:primaryType="jnt:cssFolder">
+                                    <judgeStyle.css jcr:primaryType="jnt:cssFile"/>
+                                </css>
+                                <META-INF jcr:primaryType="jnt:metaInfFolder">
+                                    <rules.drl jcr:primaryType="jnt:editableFile"/>
+                                    <rules.dsl jcr:primaryType="jnt:editableFile"/>
+                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
+                                    <spring jcr:primaryType="jnt:folder">
+                                        <jahia-tr-module.xml jcr:primaryType="jnt:xmlFile"/>
+                                    </spring>
+                                </META-INF>
+                                <jahtr_judge_list jcr:primaryType="jnt:nodeTypeFolder">
+                                    <html jcr:primaryType="jnt:templateTypeFolder">
+                                        <judge_list.jsp jcr:primaryType="jnt:viewFile"/>
+                                    </html>
+                                </jahtr_judge_list>
+                                <jahtr_blank_judge jcr:primaryType="jnt:nodeTypeFolder">
+                                    <html jcr:primaryType="jnt:templateTypeFolder">
+                                        <blank_judge.jsp jcr:primaryType="jnt:viewFile"/>
+                                    </html>
+                                </jahtr_blank_judge>
+                                <images jcr:primaryType="jnt:folder">
+                                    <schweizerisches-bundesgericht-logo.gif j:height="189"
+                                                                j:width="300"
+                                                                jcr:mixinTypes="jmix:image jmix:image"
+                                                                jcr:primaryType="jnt:file"/>
+                                </images>
+                                <sass jcr:primaryType="jnt:folder">
+                                    <_bger_legacy.scss jcr:primaryType="jnt:editableFile"/>
+                                </sass>
+                            </resources>
+                            <java jcr:primaryType="jnt:javaPackageFolder">
+                                <org jcr:primaryType="jnt:javaPackageFolder">
+                                    <jahia jcr:primaryType="jnt:folder">
+                                        <training jcr:primaryType="jnt:javaPackageFolder">
+                                            <MyAction.java jcr:primaryType="jnt:javaSourceFile"/>
+                                            <UserService.java jcr:primaryType="jnt:javaSourceFile"/>
+                                        </training>
+                                    </jahia>
+                                </org>
+                            </java>
+                        </main>
+                    </src>
+                </sources>
+                
+                <portlets jcr:primaryType="jnt:portletFolder"/>
+                <files jcr:primaryType="jnt:folder"/>
+                <contents jcr:primaryType="jnt:contentFolder"/>
+                <templates j:rootTemplatePath="/base" jcr:primaryType="jnt:templatesFolder">
+                    <files jcr:primaryType="jnt:folder"/>
+                    <contents jcr:primaryType="jnt:contentFolder"/>
+                    <base j:hiddenTemplate="false"
+                  j:view="judgeView"
+                  jcr:primaryType="jnt:template">
+                        <j:translation_en jcr:language="en"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="base"/>
+                        <judge-template j:hiddenTemplate="false"
+                               j:view="judgeView"
+                               jcr:primaryType="jnt:pageTemplate">
+                            <j:translation_en jcr:language="en"
+                                    jcr:mixinTypes="mix:title"
+                                    jcr:primaryType="jnt:translation"
+                                    jcr:title="Judge Template"/>
+                        </judge-template>
+                    </base>
+                </templates>
+                
+            </jahia-tr-module>
+    </modules>
+</content>

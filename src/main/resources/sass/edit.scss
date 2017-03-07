@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+/* USE THIS FILE FOR OVERRIDE STYLE IN JAHIA EDIT MODE */
+
+.gwt-HTML.x-component {
+    overflow: hidden;
+}
+
+table[role="presentation"] {
+    margin: 0;
+}

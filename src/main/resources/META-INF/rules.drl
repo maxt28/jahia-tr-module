@@ -1,0 +1,51 @@
+package org.jahia.modules.jahiatrmodule.rules
+
+// list any import classes here.
+import org.jahia.services.content.rules.*
+import org.jahia.services.content.JCRContentUtils
+import org.slf4j.Logger
+import org.jahia.training.UserService
+import java.util.Properties
+
+
+
+expander rules.dsl
+
+// declare any global variables here
+global User user
+global UserService userService
+global Service service
+global Logger logger
+global JCRContentUtils jcrUtils
+
+
+rule "User creation"
+	when
+		A new node is created
+			-the node has the type jahtr:journalist_form
+	then
+		Log "New journalist created"
+		Create journalist user from node
+		Log "New user created"
+		
+end
+
+rule "User deletion"
+	when
+		A node is deleted 
+			-the node has the type jahtr:journalist_form
+	then
+		Log "Journalist was removed"
+		Delete journalist user from node
+		Log "User was removed"
+end
+
+rule "User modification"
+	when 
+		A property has been set on a node
+			-the node has the type jahtr:journalist_form
+	then
+		Log "Journalist modificated"
+		Set journalist user property from node
+		Log "User modificated"
+end

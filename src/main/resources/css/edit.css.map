@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAIA,qBAAsB,CAClB,QAAQ,CAAE,MAAM,CAGpB,0BAA2B,CACvB,MAAM,CAAE,CAAC",
+"sources": ["../sass/edit.scss"],
+"names": [],
+"file": "edit.css"
+}
