@@ -29,11 +29,7 @@ public class UserService {
         final String password = node.getPropertyAsString("password");
         final Properties userProps = new Properties();
         for (final String property : properties) {
-          String value = node.getPropertyAsString(property);
-          if(value == null){
-            value = "";
-          }
-            userProps.put(property, value);
+            userProps.put(property, node.getPropertyAsString(property));
         }
         if (JCRSessionFactory.getInstance().getCurrentUser() == null) {
             JCRSessionFactory.getInstance().setCurrentUser(JahiaUserManagerService.getInstance()
