@@ -22,16 +22,17 @@
 [jahtr:blank_judge] > jnt:content, jahtr:jahia_training
 
 [jahtr:journalist_form] > jnt:content, jahtr:jahia_training
- - title (string, choicelist) mandatory i18n < 'Madame', 'Monsieur' 
- - academicTitle (string) i18n
+ - title (string, choicelist) mandatory < 'Mrs', 'Mr'
+ - academicTitle (string)
  - name (string) mandatory
  - surname (string) mandatory
- - address (string) mandatory i18n
+ - address (string) mandatory
  - npa (long) mandatory
- - place (string) mandatory i18n
- - numPhone (string) i18n
- - numCellphone (string) i18n
+ - place (string) mandatory
+ - numPhone (string)
+ - numCellphone (string)
  - email (string) mandatory multiple
  - password (string) mandatory
- - relatedUser (string) protected i18n
+ - relatedUser (string) protected
+ - enabled (boolean)
 

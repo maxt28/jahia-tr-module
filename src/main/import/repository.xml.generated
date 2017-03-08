@@ -49,6 +49,7 @@
                                 <org jcr:primaryType="jnt:javaPackageFolder">
                                     <jahia jcr:primaryType="jnt:folder">
                                         <training jcr:primaryType="jnt:javaPackageFolder">
+                                            <BackgroundService.java jcr:primaryType="jnt:javaSourceFile"/>
                                             <MyAction.java jcr:primaryType="jnt:javaSourceFile"/>
                                             <UserService.java jcr:primaryType="jnt:javaSourceFile"/>
                                         </training>

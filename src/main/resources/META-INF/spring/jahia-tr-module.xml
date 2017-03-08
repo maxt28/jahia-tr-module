@@ -29,4 +29,22 @@
         <property name="jahiaUserManagerService" ref="JahiaUserManagerService"/>
     </bean>
   
+      <bean parent="jobSchedulingBean" depends-on="userService">
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="UserRemove" />
+              <property name="jobClass" value="org.jahia.training.BackgroundService" />
+                <property name="group" value="Maintenance" />
+                <property name="description" value="User remove" />
+            </bean>
+        </property>
+        <property name="trigger">
+            <bean class="org.quartz.CronTrigger">
+                <property name="name" value="UserRemoveTrigger"/>
+                <property name="cronExpression" value="	0 0/1 * 1/1 * ? *"/>
+            </bean>
+        </property>
+    </bean>
+
+  
 </beans>

@@ -27,7 +27,6 @@ rule "User creation"
 		Log "New journalist created"
 		Create journalist user from node
 		Log "New user created"
-		
 end
 
 rule "User deletion"
@@ -48,4 +47,15 @@ rule "User modification"
 		Log "Journalist modificated"
 		Set journalist user property from node
 		Log "User modificated"
+end
+
+
+rule "Journalist published"
+	when
+		A node is published
+			-the node has the type jahtr:journalist_form
+			-the node has the type jmix:markedForDeletion
+	then
+		Log "Journalist unpublished"
+		Unpublish user from node
 end
