@@ -45,16 +45,6 @@ rule "Journalist published"
 			-the node has the type jahtr:journalist_form
 	then
 		Log "Journalist unpublished"
-		Change user from node
+		Publish user from node
 end
 
-rule "Journalist removed"
-	when
-		A node is published
-			-the node has the type jahtr:journalist_form
-			-the node has the type jmix:markedForDeletion
-	then
-		Log "Journalist unpublished"
-		Unpublish user from node
-		Log "User was unpublished"
-end

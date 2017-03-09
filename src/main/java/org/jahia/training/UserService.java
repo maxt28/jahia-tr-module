@@ -56,14 +56,14 @@ public class UserService {
 
     }
     public void deleteUser(final PublishedNodeFact node) throws RepositoryException {
-        deleteUser(node.getName(), node.getIdentifier());
+        deleteUser(node.getNode().getName());
     }
 
     public void deleteUser(final DeletedNodeFact node) throws RepositoryException {
-        deleteUser(node.getName(), node.getIdentifier());
+        deleteUser(node.getName());
     }
 
-    public void deleteUser(final String name, final String id) throws RepositoryException {
+    public void deleteUser(final String name) throws RepositoryException {
         JCRTemplate.getInstance().doExecuteWithSystemSession(new JCRCallback() {
             @Override
             public Boolean doInJCR(final JCRSessionWrapper session) throws RepositoryException {
@@ -88,13 +88,19 @@ public class UserService {
     }
 
     public void updateUser(final PublishedNodeFact node) throws RepositoryException {
+        for (String type : node.getTypes()) {
+            if (type.equals("jmix:markedForDeletion")) {
+                deleteUser(node.getName());
+                return;
+            }
+        }
         JCRTemplate.getInstance().doExecuteWithSystemSession(new JCRCallback() {
             @Override
             public Boolean doInJCR(final JCRSessionWrapper session) throws RepositoryException {
                 JCRUserNode user = getUserByName(node.getName(), session);
-                for(String property : properties){
+                for (String property : properties) {
                     String value = node.getNode().getPropertyAsString(property);
-                    if(value == null){
+                    if (value == null) {
                         value = "";
                     }
                     user.setProperty(property, value);
@@ -114,7 +120,7 @@ public class UserService {
     }
 
     public void publish(final String nodeUUID) throws RepositoryException {
-        if(nodeUUID != null) {
+        if(!nodeUUID.equals(null)) {
             JCRPublicationService.getInstance().publishByMainId(nodeUUID,
                     Constants.EDIT_WORKSPACE,
                     Constants.LIVE_WORKSPACE,
@@ -126,5 +132,9 @@ public class UserService {
 
     public void setJahiaUserManagerService(JahiaUserManagerService jahiaUserManagerService) {
         this.jahiaUserManagerService = jahiaUserManagerService;
+    }
+
+    public JahiaUserManagerService getJahiaUserManagerService() {
+        return jahiaUserManagerService;
     }
 }
