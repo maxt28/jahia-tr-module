@@ -39,18 +39,16 @@ rule "User deletion"
 		Log "User was removed"
 end
 
-rule "User modification"
-	when 
-		A property has been set on a node
+rule "Journalist published"
+	when
+		A node is published
 			-the node has the type jahtr:journalist_form
 	then
-		Log "Journalist modificated"
-		Set journalist user property from node
-		Log "User modificated"
+		Log "Journalist unpublished"
+		Change user from node
 end
 
-
-rule "Journalist published"
+rule "Journalist removed"
 	when
 		A node is published
 			-the node has the type jahtr:journalist_form
@@ -58,4 +56,5 @@ rule "Journalist published"
 	then
 		Log "Journalist unpublished"
 		Unpublish user from node
+		Log "User was unpublished"
 end

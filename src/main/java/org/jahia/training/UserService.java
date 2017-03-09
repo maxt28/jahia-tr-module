@@ -1,5 +1,6 @@
 package org.jahia.training;
 
+
 import org.jahia.api.Constants;
 import org.jahia.services.content.*;
 import org.jahia.services.content.decorator.JCRUserNode;
@@ -11,6 +12,7 @@ import org.jahia.services.usermanager.JahiaUserManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
 import java.util.*;
@@ -38,18 +40,15 @@ public class UserService {
             }
             userProps.put(property, value);
         }
-        if (JCRSessionFactory.getInstance().getCurrentUser() == null) {
-            JCRSessionFactory.getInstance().setCurrentUser(JahiaUserManagerService.getInstance()
-                    .lookupRootUser().getJahiaUser());
-        }
         JCRTemplate.getInstance().doExecuteWithSystemSession(new JCRCallback() {
             @Override
             public Boolean doInJCR(final JCRSessionWrapper session) throws RepositoryException {
                 final JCRUserNode user = jahiaUserManagerService.createUser(name, password, userProps, session);
-                node.setProperty("relatedUser", user);
-                session.save();
+                user.getSession().save();
+                node.setProperty("relatedUser", user.getName());
+                node.getSession().save();
+                publish(node);
                 publish(user);
-                publish(node.getIdentifier());
                 session.save();
                 return true;
             }
@@ -88,20 +87,20 @@ public class UserService {
         return null;
     }
 
-    public void updateUser(final ChangedPropertyFact property, final AddedNodeFact node) throws RepositoryException {
-        property.getStringValue();
-        property.getName();
+    public void updateUser(final PublishedNodeFact node) throws RepositoryException {
         JCRTemplate.getInstance().doExecuteWithSystemSession(new JCRCallback() {
             @Override
             public Boolean doInJCR(final JCRSessionWrapper session) throws RepositoryException {
                 JCRUserNode user = getUserByName(node.getName(), session);
-                user.setProperty(property.getName() ,property.getStringValue());
-                if (user != null) {
-                    publish(user);
+                for(String property : properties){
+                    String value = node.getNode().getPropertyAsString(property);
+                    if(value == null){
+                        value = "";
+                    }
+                    user.setProperty(property, value);
                 }
-                if (node != null) {
-                    publish(node.getNode());
-                }
+                publish(user);
+                publish(node.getNode());
                 session.save();
                 return true;
             }
@@ -109,16 +108,20 @@ public class UserService {
     }
 
     public void publish(final Node node) throws RepositoryException {
-        publish(node.getIdentifier());
+        if(node!=null) {
+            publish(node.getIdentifier());
+        }
     }
 
     public void publish(final String nodeUUID) throws RepositoryException {
-        JCRPublicationService.getInstance().publishByMainId(nodeUUID,
-                Constants.EDIT_WORKSPACE,
-                Constants.LIVE_WORKSPACE,
-                null,
-                true,
-                Collections.singletonList("") );
+        if(nodeUUID != null) {
+            JCRPublicationService.getInstance().publishByMainId(nodeUUID,
+                    Constants.EDIT_WORKSPACE,
+                    Constants.LIVE_WORKSPACE,
+                    null,
+                    true,
+                    Collections.singletonList(""));
+        }
     }
 
     public void setJahiaUserManagerService(JahiaUserManagerService jahiaUserManagerService) {
